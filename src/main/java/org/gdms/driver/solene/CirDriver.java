@@ -311,7 +311,7 @@ public final class CirDriver extends AbstractDataSet implements FileReadWriteDri
                 boolean constGeom = 
                         (geometryType == Type.GEOMETRY  || geometryType == Type.GEOMETRYCOLLECTION)
                         && gdc != null 
-                        && gdc.getDimension() == GeometryDimensionConstraint.DIMENSION_POLYGON;
+                        && gdc.getDimension() == GeometryDimensionConstraint.DIMENSION_SURFACE;
                 if (    //We must deal with a polygonal type.
                         nullT || (notPolyT && !constGeom)) {
                         throw new DriverException(
