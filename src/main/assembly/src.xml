@@ -15,7 +15,7 @@
                 <dependencySet>
                         <outputDirectory>/</outputDirectory>
                         <excludes>
-                                <exclude>org.gdms:gdms</exclude>
+                                <exclude>org.gdms:gdms:*</exclude>
                         </excludes>
                         <useTransitiveFiltering>true</useTransitiveFiltering>
                         <unpack>true</unpack>
