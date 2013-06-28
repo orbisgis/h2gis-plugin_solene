@@ -5,7 +5,8 @@
     <artifactId>gdms-solene-plugin</artifactId>
     <name>gdms-solene-plugin</name>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
+    <description>Add a GDMS Driver in order to open Solene *.cir files</description>
     <repositories>
         <repository>
             <id>IRSTV</id>
@@ -19,16 +20,45 @@
         </repository>
     </repositories>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.gdms</groupId>
             <artifactId>gdms</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <version>2.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.3.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.3.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Activator>org.gdms.driver.solene.Activator</Bundle-Activator>
+                        <Private-Package>org.gdms.driver.solene.*</Private-Package>
+                        <Bundle-Icon>org/gdms/driver/solene/solene.png;size=32</Bundle-Icon>
+                        <Bundle-Vendor>IRSTV - FR CNRS 2488</Bundle-Vendor>
+                        <Bundle-Category>OrbisGIS, GDMS</Bundle-Category>
+                    </instructions>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -37,15 +67,6 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.3</version>
-                    <configuration>
-                            <descriptors>
-                                    <descriptor>src/main/assembly/src.xml</descriptor>
-                            </descriptors>
-                    </configuration>
             </plugin>
         </plugins>
     </build>
