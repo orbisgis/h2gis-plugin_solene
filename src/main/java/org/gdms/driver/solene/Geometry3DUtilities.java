@@ -29,6 +29,9 @@
 package org.gdms.driver.solene;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.CoordinateSequence;
+import com.vividsolutions.jts.geom.CoordinateSequenceFilter;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -126,4 +129,49 @@ public final class Geometry3DUtilities {
 
         private Geometry3DUtilities() {
         }
+
+
+    /**
+     * @param g A Geometry
+     * @return A clone of g but with Nan Z at 0
+     */
+        public static Geometry setZeroZ(Geometry g) {
+            // Clone geometry
+            Geometry geom = new GeometryFactory().createGeometry(g);
+            geom.apply(new SetZFilter());
+            return geom;
+        }
+    /**
+     * Set 0 to Z component of a CoordinateSequence
+     */
+    private static class SetZFilter implements CoordinateSequenceFilter {
+        private boolean done = false;
+        private boolean geometryChanged = false;
+
+        @Override
+        public void filter(CoordinateSequence seq, int i) {
+            Coordinate coord = seq.getCoordinate(i);
+            seq.setOrdinate(i, 0, coord.x);
+            seq.setOrdinate(i, 1, coord.y);
+            if(Double.isNaN(coord.z)) {
+                seq.setOrdinate(i, 2, 0);
+                geometryChanged = true;
+            } else {
+                seq.setOrdinate(i, 2, coord.z);
+            }
+            if (i == seq.size()) {
+                done = true;
+            }
+        }
+
+        @Override
+        public boolean isDone() {
+            return done;
+        }
+
+        @Override
+        public boolean isGeometryChanged() {
+            return geometryChanged;
+        }
+    }
 }
