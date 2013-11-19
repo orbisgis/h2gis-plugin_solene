@@ -270,6 +270,20 @@ public final class CirDriver extends AbstractDataSet implements FileReadWriteDri
                                 Value v = dataSource.getFieldValue(rowIndex, spatialFieldIndex);
                                 if (!v.isNull()) {
                                         Geometry g = v.getAsGeometry();
+                                        boolean applyZFilter = false;
+                                        // Check that Geometry contain Z value
+                                        for(Coordinate coordinate : g.getCoordinates()) {
+                                            if(Double.isNaN(coordinate.z)) {
+                                                LOG.warn("Row "+rowIndex+ " contain a 2D Geometry, set Z to 0");
+                                                applyZFilter = true;
+                                                break;
+                                            }
+                                        }
+                                        if(applyZFilter) {
+                                            // Compute normal will fail if Z is NaN
+                                            // Then set it to zero
+                                            g= Geometry3DUtilities.setZeroZ(g);
+                                        }
                                         if (g instanceof Polygon) {
                                                 writeAPolygon((Polygon) g, rowIndex);
                                         } else if (g instanceof MultiPolygon) {
