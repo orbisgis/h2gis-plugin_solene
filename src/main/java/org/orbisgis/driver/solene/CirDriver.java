@@ -69,7 +69,7 @@ public final class CirDriver implements DriverFunction {
 
     @Override
     public String[] getImportFormats() {
-        return new String[0];
+        return new String[] {EXTENSION};
     }
 
     @Override
