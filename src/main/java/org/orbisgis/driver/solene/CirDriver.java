@@ -26,7 +26,7 @@
  * or contact directly:
  * info_at_ orbisgis.org
  */
-package org.gdms.driver.solene;
+package org.orbisgis.driver.solene;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,6 +45,7 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 import org.h2gis.utilities.SpatialResultSet;
+import org.osgi.service.component.annotations.Component;
 
 
 /**
@@ -54,6 +55,7 @@ import org.h2gis.utilities.SpatialResultSet;
  * @author Antoine Gourlay
  * @author Nicolas Fortin
  */
+@Component
 public final class CirDriver implements DriverFunction {
 
     public static final String DRIVER_NAME = "Solene Cir driver";
@@ -90,8 +92,8 @@ public final class CirDriver implements DriverFunction {
              }
         }
         try(Statement st = connection.createStatement();
-            SpatialResultSet rs = st.executeQuery("SELECT * FROM "+tableReference).unwrap(SpatialResultSet.class)) {
-            PrintWriter out = new PrintWriter(new FileOutputStream(fileName));
+            SpatialResultSet rs = st.executeQuery("SELECT * FROM "+tableReference).unwrap(SpatialResultSet.class);
+            PrintWriter out = new PrintWriter(new FileOutputStream(fileName))) {
             ProgressVisitor writeTask = progress.subProcess(rowCount);
             out.printf("%d %d\r\n", rowCount, rowCount);
             for (int i = 0; i < 5; i++) {
