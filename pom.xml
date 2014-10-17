@@ -20,6 +20,11 @@
         </repository>
     </repositories>
 
+    <parent>
+        <groupId>org.orbisgis</groupId>
+        <artifactId>orbisgis-nexus</artifactId>
+        <version>1</version>
+    </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -27,7 +32,7 @@
         <dependency>
             <groupId>org.gdms</groupId>
             <artifactId>gdms</artifactId>
-            <version>2.0.3-SNAPSHOT</version>
+            <version>2.0.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
