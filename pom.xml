@@ -1,25 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.gdms.plugins</groupId>
-    <artifactId>gdms-solene-plugin</artifactId>
-    <name>gdms-solene-plugin</name>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>solene-plugin</artifactId>
+    <name>Solene H2GIS driver</name>
+    <version>2.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <description>Add a GDMS Driver in order to open Solene *.cir files</description>
-    <repositories>
-        <repository>
-            <id>IRSTV</id>
-            <name>IRSTV repository</name>
-            <url>http://repo.orbisgis.org</url>
-        </repository>
-        <repository>
-            <id>repo2.maven.org</id>
-            <name>Maven2 repository 2</name>
-            <url>http://repo2.maven.org/maven2</url>
-        </repository>
-    </repositories>
-
+    <description>Add a H2GIS Driver in order to open Solene *.cir files</description>
     <parent>
         <groupId>org.orbisgis</groupId>
         <artifactId>orbisgis-nexus</artifactId>
@@ -30,25 +16,64 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.gdms</groupId>
-            <artifactId>gdms</artifactId>
-            <version>2.0.4-SNAPSHOT</version>
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jts</artifactId>
+            <version>1.13</version>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <groupId>org.orbisgis</groupId>
+            <artifactId>h2spatial-api</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.orbisgis</groupId>
+            <artifactId>h2spatial</artifactId>
+            <version>1.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.orbisgis</groupId>
+            <artifactId>spatial-utilities</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <version>4.3.1</version>
-            <scope>provided</scope>
+            <artifactId>org.osgi.enterprise</artifactId>
+            <version>5.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-    
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.carrotgarden.maven</groupId>
+                <artifactId>carrot-maven-scr-plugin</artifactId>
+                <version>3.0.3</version>
+                <configuration>
+                    <enableDebugLogging>true</enableDebugLogging>
+                    <enableErrorLogging>true</enableErrorLogging>
+                    <enableInfoLogging>true</enableInfoLogging>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -56,21 +81,22 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-Activator>org.gdms.driver.solene.Activator</Bundle-Activator>
-                        <Private-Package>org.gdms.driver.solene.*</Private-Package>
-                        <Bundle-Icon>org/gdms/driver/solene/solene.png;size=32</Bundle-Icon>
+                        <Private-Package>org.orbisgis.driver.solene.*</Private-Package>
+                        <Service-Component>OSGI-INF/service-component/*.xml</Service-Component>
+                        <Bundle-Icon>org/orbisgis/driver/solene/solene.png;size=32</Bundle-Icon>
                         <Bundle-Vendor>IRSTV - FR CNRS 2488</Bundle-Vendor>
-                        <Bundle-Category>OrbisGIS, GDMS</Bundle-Category>
+                        <Bundle-Category>OrbisGIS, H2GIS</Bundle-Category>
+                        <Import-Package>org.slf4j;version="[1.6.0,1.7.5]",*</Import-Package>
                     </instructions>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>
