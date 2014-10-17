@@ -27,6 +27,18 @@
         </dependency>
         <dependency>
             <groupId>org.orbisgis</groupId>
+            <artifactId>h2spatial</artifactId>
+            <version>1.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.orbisgis</groupId>
             <artifactId>spatial-utilities</artifactId>
             <version>1.1.0</version>
         </dependency>
@@ -74,6 +86,7 @@
                         <Bundle-Icon>org/orbisgis/driver/solene/solene.png;size=32</Bundle-Icon>
                         <Bundle-Vendor>IRSTV - FR CNRS 2488</Bundle-Vendor>
                         <Bundle-Category>OrbisGIS, H2GIS</Bundle-Category>
+                        <Import-Package>org.slf4j;version="[1.6.0,1.7.5]",*</Import-Package>
                     </instructions>
                 </configuration>
             </plugin>
