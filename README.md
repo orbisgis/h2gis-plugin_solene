@@ -1,4 +1,4 @@
-Gdms Solene plugin
+Solene plugin
 ====
 
-Plugin for Gdms that adds support for the cir/solene file format.
+Plugin that adds support for the cir/solene file format.
