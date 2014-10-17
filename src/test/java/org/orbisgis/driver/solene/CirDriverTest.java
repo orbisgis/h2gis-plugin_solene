@@ -22,8 +22,8 @@ public class CirDriverTest {
             Statement st = connection.createStatement()) {
             st.execute("DROP TABLE IF EXISTS TEST");
             st.execute("CREATE TABLE TEST(gid serial, the_geom POLYGON);");
-            st.execute("INSERT INTO TEST(the_geom) VALUES('POLYGON((1 1,5 1,5 5,1 5,1 1))')");
-            st.execute("INSERT INTO TEST(the_geom) VALUES('POLYGON((1 6,5 6,5 10,1 10,1 6))')");
+            st.execute("INSERT INTO TEST(the_geom) VALUES('POLYGON((1 1 0,5 1 0,5 5 0,1 5 0,1 1 0))')");
+            st.execute("INSERT INTO TEST(the_geom) VALUES('POLYGON((1 6 10,5 6 10,5 10 10,1 10 10,1 6 10))')");
             CirDriver cirDriver = new CirDriver();
             cirDriver.exportTable(connection, "TEST", new File("target/test.cir"), new EmptyProgressVisitor());
             assertTrue(new File("target/test.cir").exists());
