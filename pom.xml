@@ -20,6 +20,11 @@
         </repository>
     </repositories>
 
+    <parent>
+        <groupId>org.orbisgis</groupId>
+        <artifactId>orbisgis-nexus</artifactId>
+        <version>1</version>
+    </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
